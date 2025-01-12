@@ -49,9 +49,9 @@ const UpdateProfile = () => {
         email,
         phone,
         education,
-        skills,
+        "skills": skills.split(',').map(skill => skill.trim()),
         experience,
-        location
+        "location": location.split(',').map(loc => loc.trim()),
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
