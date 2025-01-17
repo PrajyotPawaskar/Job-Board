@@ -3,69 +3,77 @@ import { useAuth } from '../context/authContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-const UpdateProfile = () => {
 
+const UpdateProfile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneno, setPhoneno] = useState('');
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
-  const [experience, setExperience] = useState();
+  const [experience, setExperience] = useState('');
   const [location, setLocation] = useState('');
+
   const { token } = useAuth();
 
+  // Fetch user profile data
   const getDataInfo = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/profile/getinfo',
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
-      )
-      if (res.status === 200) {
-        setName(res.data.name);
-        setEmail(res.data.email);
-        setPhone(res.data.phone);
-        setEducation(res.data.education);
-        setSkills(res.data.skills);
-        setExperience(res.data.experience);
-        setLocation(res.data.location);
-      }
+      const res = await axios.get('http://localhost:3000/profile/getinfo', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const profile = res.data.profile || {};
+      setName(profile.name ?? '');
+      setEmail(profile.email ?? '');
+      setPhoneno(profile.phoneno ? String(profile.phoneno) : '');
+      setEducation(profile.education ?? '');
+      setSkills(profile.skills ? profile.skills.join(', ') : ''); // Convert array to string
+      setExperience(profile.experience ? String(profile.experience) : '');
+      setLocation(profile.location ? profile.location.join(', ') : ''); // Convert array to string
+      console.log(res.data.profile);
+
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching data:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getDataInfo();
-  }, [])
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate the fields properly with explicit type checking
+    const fields = [name, email, phoneno, education, skills, experience, location];
+
+    const allFieldsValid = fields.every(field =>
+      typeof field === 'string' && field.trim() !== ''
+    );
+
+    if (!allFieldsValid) {
+      toast.error("Please fill in all the fields properly");
+      return;
+    }
+
     try {
       const res = await axios.put('http://localhost:3000/profile/update', {
-        name,
-        email,
-        phone,
-        education,
-        "skills": skills.split(',').map(skill => skill.trim()),
-        experience,
-        "location": location.split(',').map(loc => loc.trim()),
+        name: name.trim(),
+        email: email.trim(),
+        phoneno: phoneno.trim(),
+        education: education.trim(),  // Handle trimming for education
+        skills: skills.split(',').map(skill => skill.trim()).filter(Boolean),  // Convert skills string to array
+        experience: Number(experience.trim()),  // Ensure number conversion
+        location: location.split(',').map(loc => loc.trim()).filter(Boolean), // Convert location string to array
       }, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      }
-      )
-      if (res.status === 200) {
-        toast.success("Profile Updated Successfully");
-      }
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      toast.success("Profile Updated Successfully");
     } catch (error) {
-      console.log(error);
+      console.error("Error updating profile:", error);
       toast.error("Error updating profile");
     }
-  }
+  };
 
   return (
     <>
@@ -85,9 +93,9 @@ const UpdateProfile = () => {
               />
             </div>
             <div>
-              <label htmlFor="phone">Phone:</label>
-              <input type="number" id="phone" name="phone"
-                value={phone} onChange={(e) => setPhone(e.target.value)}
+              <label htmlFor="phoneno">Phone:</label>
+              <input type="number" id="phoneno" name="phoneno"
+                value={phoneno} onChange={(e) => setPhoneno(e.target.value)}
               />
             </div>
             <div>
@@ -109,7 +117,7 @@ const UpdateProfile = () => {
               />
             </div>
             <div>
-              <label htmlFor="location">Preferred locaitons:</label>
+              <label htmlFor="location">Preferred Locations:</label>
               <input type="text" id='location' name='location'
                 value={location} onChange={(e) => setLocation(e.target.value)}
               />
@@ -120,7 +128,7 @@ const UpdateProfile = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default UpdateProfile
+export default UpdateProfile;

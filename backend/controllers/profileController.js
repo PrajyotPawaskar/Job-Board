@@ -6,24 +6,32 @@ const Profile = require('../models/profileModel');
 
 const setProfile = async (req, res) => {
     const { name, email, phoneno, education, skills, experience, location } = req.body;
-    const user = req.user.id;
+    const user = req.user?.id;
 
-    if (!name || !email || !phoneno || !education || !skills || !experience || !location || !user) {
-        return res.status(400).json({
-            message: "Please enter all the fields"
-        })
+    // Trim and validate inputs properly
+    if (![name, email, phoneno, education, skills, experience, location, user].every(field => typeof field === 'string' ? field.trim() : true)) {
+        return res.status(400).json({ message: "Please enter all the fields properly" });
     }
-    const profileExists = await Profile.findOne({ "email": email })
-    if (profileExists) {
-        return res.status(400).json({
-            message: "Profile already exists for this user"
-        })
-    }
-    const profile = await Profile.create({ name, email, phoneno, education, skills, experience, location, "user": user })
-    if (profile) {
-        return res.status(201).json({ profile });
-    } else {
-        return res.status(400).json({ message: 'Invalid profile data' });
+
+    try {
+        const profileExists = await Profile.findOne({ email: email.trim() });
+        if (profileExists) {
+            return res.status(400).json({ message: "Profile already exists for this user" });
+        }
+
+        const profile = await Profile.create({
+            name: name.trim(),
+            email: email.trim(),
+            phoneno: phoneno.trim(),
+            education: education.trim(),
+            skills: skills.map(skill => skill.trim()).filter(Boolean),
+            experience: Number(experience),
+            location: location.map(loc => loc.trim()).filter(Boolean),
+            user
+        });
+        res.status(201).json({ profile });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
     }
 }
 

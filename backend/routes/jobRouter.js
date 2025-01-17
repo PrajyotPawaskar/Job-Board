@@ -4,7 +4,7 @@ const { postJob, getJob, applyJob, getsingleJob } = require('../controllers/jobC
 const { roleAuth } = require('../middleware/roleauthMiddleware');
 const router = express.Router()
 router.post('/postjob', protectRoute, roleAuth, postJob);
-router.get('/getjobs', protectRoute, roleAuth, getJob);
+router.get('/getjobs', protectRoute, getJob);
 router.post('/:jobId', protectRoute, applyJob);
 router.get('/:jobId', protectRoute, roleAuth, getsingleJob);
 

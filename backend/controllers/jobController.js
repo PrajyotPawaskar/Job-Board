@@ -6,13 +6,13 @@ const Job = require("../models/jobModel");
 // @access protected
 
 const postJob = async (req, res) => {
-    const { company, role, skills, experience, package, location } = req.body;
-    if (!company || !role || !skills || !experience || !package || !location) {
+    const { company, role, skills, experience, pay, location } = req.body;
+    if (!company || !role || !skills || !experience || !pay || !location) {
         return res.status(400).json({
             message: "Please enter all fields"
         });
     }
-    const job = await Job.create({ company, role, skills, experience, package, location });
+    const job = await Job.create({ company, role, skills, experience, pay, location });
 
     if (job) {
         return res.status(201).json({

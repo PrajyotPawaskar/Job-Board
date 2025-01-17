@@ -34,7 +34,7 @@ const GetSingleJob = () => {
           <h3>{data.role}</h3>
           <h3>Skills: {data.skills.join(", ")}</h3>
           <h3>Experience: {data.experience}</h3>
-          <h3>Package: {data.package}</h3>
+          <h3>Package: {data.pay}</h3>
           <h3>Location: {data.location.join(", ")}</h3>
         </>
       ) : (

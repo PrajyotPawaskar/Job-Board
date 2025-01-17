@@ -17,7 +17,7 @@ const jobSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    package: {
+    pay: {
         type: Number,
         required: true
     },

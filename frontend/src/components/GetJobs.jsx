@@ -17,7 +17,9 @@ const GetJobs = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      setJobs(response.data);
+      setJobs(response.data.jobs);
+      console.log(response.data.jobs);
+      
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
@@ -34,7 +36,7 @@ const GetJobs = () => {
               <h3>{job.role}</h3>
               <h3>Skills: {job.skills.join(", ")}</h3>
               <h3>Experience: {job.experience}</h3>
-              <h3>Package: {job.package}</h3>
+              <h3>Package: {job.pay}</h3>
               <h3>Location: {job.location.join(", ")}</h3>
             </div>
           ))

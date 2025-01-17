@@ -18,12 +18,12 @@ const PostJob = () => {
     try {
       const res = await axios.post('http://localhost:3000/jobs/postjob',
         {
-          company,
-          role,
-          skills: skills.split(',').map(skill => skill.trim()),
-          experience,
-          pay,
-          location: location.split(',').map(loc => loc.trim()),
+          company:company.trim(),
+          role: role.trim(),
+          skills: skills.split(',').map(skill => skill.trim()).filter(Boolean),
+          experience: Number(experience.trim()),
+          pay: Number(pay.trim()),
+          location: location.split(',').map(loc => loc.trim()).filter(Boolean),
         },
         {
           headers: {
@@ -31,13 +31,13 @@ const PostJob = () => {
           }
         }
       );
-      if (res.status === 200) {
         toast.success("Job Posted Successfully");
-      }
     } catch (error) {
       console.error('Error posting job:', error);
       toast.error("Error posting job");
     }
+    console.log(token);
+    
   };
 
   return (

@@ -17,20 +17,18 @@ function App() {
   return (
     <>
       <Navbar />
-      <Router>
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/getinfo" element={<Getinfo />} />
-            <Route path="/setprofile" element={<SetProfile />} />
-            <Route path="/getprofile" element={<GetProfile />} />
-            <Route path="/updateprofile" element={<UpdateProfile />} />
-            <Route path="/deleteprofile" element={<DeleteProfile />} />
-            <Route path="/getJobs" element={<GetJobs />} />
-            <Route path="/postjob" element={<PostJob />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/getinfo" element={<Getinfo />} />
+          <Route path="/setprofile" element={<SetProfile />} />
+          <Route path="/getprofile" element={<GetProfile />} />
+          <Route path="/updateprofile" element={<UpdateProfile />} />
+          <Route path="/deleteprofile" element={<DeleteProfile />} />
+          <Route path="/getJobs" element={<GetJobs />} />
+          <Route path="/postjob" element={<PostJob />} />
         </Routes>
-      </Router>
       <Footer />
     </>
   )
