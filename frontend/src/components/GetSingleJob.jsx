@@ -15,8 +15,8 @@ const GetSingleJob = () => {
           }
         }
       );
-      console.log(res.data);
-      setData(res.data);
+      console.log(res.data.jobs);
+      setData(res.data.jobs);
     } catch (error) {
       console.error(error);
 

@@ -12,6 +12,8 @@ import DeleteProfile from './components/DeleteProfile'
 import GetJobs from './components/GetJobs'
 import PostJob from './components/PostJob'
 import Getinfo from './components/Getinfo'
+import GetSingleJob from './components/GetSingleJob'
+import ApplyJob from './components/ApplyJob'
 function App() {
 
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/deleteprofile" element={<DeleteProfile />} />
           <Route path="/getJobs" element={<GetJobs />} />
           <Route path="/postjob" element={<PostJob />} />
+          <Route path="/job/:id" element={<GetSingleJob />} />
+          <Route path="/applyjob/:id" element={<ApplyJob />} />
         </Routes>
       <Footer />
     </>

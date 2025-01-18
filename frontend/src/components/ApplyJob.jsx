@@ -17,9 +17,9 @@ const ApplyJob = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      setData(res.data);
+      setData(res.data.jobs);
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Error fetching job data");
     }
   }
@@ -35,7 +35,7 @@ const ApplyJob = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log(res.data);
+      console.log(res.data.jobs);
       toast.success("Applied Successfully");
     } catch (error) {
       console.error(error);
