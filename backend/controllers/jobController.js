@@ -83,6 +83,8 @@ const applyJob = async (req, res) => {
         const jobId = req.params.jobId;
         const userId = req.user.id;
 
+        console.log(jobId, userId);
+
         // Find the profile of the user
         const profile = await Profile.findOne({ "user": userId });
         if (!profile) {
@@ -90,11 +92,18 @@ const applyJob = async (req, res) => {
         }
         const profileId = profile.id;
 
+
+        console.log("profileId",profileId);
+
+
         // Find the job by ID
         const job = await Job.findById(jobId);
         if (!job) {
             return res.status(404).json({ message: "Job not found" });
         }
+
+        console.log("job",job);
+        
 
         // Check if the user has already applied to the job
         const profilePresent = job.applications.some(application => application.profile.toString() === profileId);

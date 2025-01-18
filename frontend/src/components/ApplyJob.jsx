@@ -30,17 +30,19 @@ const ApplyJob = () => {
 
   const applyJob = async () => {
     try {
-      const res = await axios.post(`http://localhost:3000/jobs/apply/${id}`, {}, {
+      const res = await axios.post(`http://localhost:3000/jobs/${id}`, {}, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log(res.data.jobs);
+      console.log(res.data);
       toast.success("Applied Successfully");
     } catch (error) {
       console.error(error);
       toast.error("Error applying for the job");
     }
+    console.log("token", token);
+    console.log("id", id);
   }
 
   return (

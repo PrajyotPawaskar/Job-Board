@@ -6,6 +6,6 @@ const router = express.Router()
 router.post('/postjob', protectRoute, roleAuth, postJob);
 router.get('/getjobs', protectRoute, getJob);
 router.post('/:jobId', protectRoute, applyJob);
-router.get('/:jobId', protectRoute, roleAuth, getsingleJob);
+router.get('/:jobId', protectRoute, getsingleJob);
 
 module.exports = router
