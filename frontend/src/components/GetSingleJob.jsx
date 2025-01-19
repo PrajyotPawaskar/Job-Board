@@ -36,6 +36,22 @@ const GetSingleJob = () => {
           <h3>Experience: {data.experience}</h3>
           <h3>Package: {data.pay}</h3>
           <h3>Location: {data.location.join(", ")}</h3>
+          {
+            data.applications.length > 0 ? (
+              <>
+                <h3>Applications:</h3>
+                <ul>
+                  {data.applications.map((application, index) => (
+                    <li key={index}>
+                      <strong>Name:</strong> {application.profile.name} | <strong>Email:</strong> {application.profile.email} | <strong>Phone:</strong> {application.profile.phoneno} | <strong>Education:</strong> {application.education} | <strong>Skills:</strong> {application.profile.skills.join(", ")} 
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p>No applications yet.</p>
+            )
+          }
         </>
       ) : (
         <p>Loading...</p>

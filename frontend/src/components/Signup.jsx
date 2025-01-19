@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ const Signup = () => {
       setEmail('');
       setPassword('');
       setRole('');
+      navigate('/');
     } catch (error) {
       toast.error('Error during registration');
       console.error(error);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
 
 const Navbar = () => {
   return (
@@ -14,6 +15,7 @@ const Navbar = () => {
           <li><Link to="/deleteprofile">Delete Profile</Link></li>
           <li><Link to="/getjobs">Jobs</Link></li>
           <li><Link to="/postjob">Post Job</Link></li>
+          <li><Logout/></li>
         </ul>
       </nav>
     </div>

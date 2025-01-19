@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/authContext';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 const GetJobs = () => {
   const { token } = useAuth();
   const [jobs, setJobs] = useState([]);
@@ -38,6 +38,9 @@ const GetJobs = () => {
               <h3>Experience: {job.experience}</h3>
               <h3>Package: {job.pay}</h3>
               <h3>Location: {job.location.join(", ")}</h3>
+              <button>
+                <Link to={`/applyjob/${job._id}`} >Apply</Link>
+              </button>
             </div>
           ))
         ) : (

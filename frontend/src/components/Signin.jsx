@@ -4,7 +4,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 const Signin = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { token, user } = useAuth();
@@ -12,11 +14,12 @@ const Signin = () => {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/user/login', { email, password });
-      toast.success("Login Successful");
       setEmail('');
       setPassword('');
+      toast.success("Login Successful");
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('userId', JSON.stringify(res.data.user._id));
+      navigate('/');
     } catch (error) {
       toast.error('Error during login');
       console.error(error);
